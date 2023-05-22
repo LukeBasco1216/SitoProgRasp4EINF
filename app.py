@@ -165,7 +165,6 @@ class Page2(tk.Frame):
         EntryPassword.grid(row=2, column=1, padx=10, pady=5)
         
         Hello_Label = Label(text = 'Good morning!' + EntryCognome.get() + ' ' + EntryNome.get()).grid(row=4, column=5, padx=10, pady=5)
-        Hello_Label
 
         Button(self, text="Login", width=10, command=lambda : controller.show_frame(Hello_Label)).grid(row=3, column=0, sticky="w", padx=10, pady=5)
 
