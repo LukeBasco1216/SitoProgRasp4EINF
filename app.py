@@ -210,5 +210,6 @@ class UserEditPage(tk.Frame):
 
 
 
+app = tkinterApp()
 
 root.mainloop()
