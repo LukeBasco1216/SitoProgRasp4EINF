@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import tkinter as tk
+import pymssql
 
 LARGEFONT =("Verdana", 35)
 
@@ -26,12 +27,12 @@ class tkinterApp(tk.Tk):
 
 		# iterating through a tuple consisting
 		# of the different page layouts
-		for F in (StartPage, Page1, Page2, Page3):
+		for F in (StartPage, Page1, Sign_Up, Page3):
 
 			frame = F(container, self)
 
 			# initializing frame of that object from
-			# startpage, page1, page2 respectively with
+			# startpage, page1, Sign_Up respectively with
 			# for loop
 			self.frames[F] = frame
 
@@ -67,7 +68,7 @@ class StartPage(tk.Frame):
 
 		## button to show frame 2 with text layout2
 		button2 = ttk.Button(self, text ="Page 2",
-		command = lambda : controller.show_frame(Page2))
+		command = lambda : controller.show_frame(Sign_Up))
 	
 		# putting the button in its place by
 		# using grid
@@ -103,7 +104,7 @@ class Page1(tk.Frame):
 		# button to show frame 2 with text
 		# layout2
 		button2 = ttk.Button(self, text ="Page 2",
-							command = lambda : controller.show_frame(Page2))
+							command = lambda : controller.show_frame(Sign_Up))
 	
 		# putting the button in its place by
 		# using grid
@@ -119,11 +120,11 @@ class Page1(tk.Frame):
   
   
   
-# third window frame page2
-class Page2(tk.Frame):
+# third window frame Sign_Up
+class Sign_Up(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = ttk.Label(self, text ="Page 2", font = LARGEFONT)
+        label = ttk.Label(self, text ="Inserzione", font = LARGEFONT)
         label.grid(row = 0, column = 4, padx = 10, pady = 10)
   
         # button to show frame 2 with text
@@ -151,23 +152,37 @@ class Page2(tk.Frame):
 		# using grid
         button3.grid(row = 3, column = 1, padx = 10, pady = 10)
 
-        Cognome = Label(self, text = 'Insert your surname: ').grid(row=0)
+        Email = Label(self, text = 'Insert Email: ').grid(row=0)
 
-        Nome = Label(self, text = 'Insert your name: ').grid(row=1)
+        Nome = Label(self, text = 'Insert name: ').grid(row=1)
 
-        Password = Label(self, text = 'Insert your password: ').grid(row=2)
+        Password = Label(self, text = 'Insert password: ').grid(row=2)
 
-        EntryCognome = Entry(self)
+        EntryEmail = Entry(self)
         EntryNome = Entry(self)
         EntryPassword = Entry(self,show='*')
-        EntryCognome.grid(row=0, column=1, padx=10, pady=5)
+        EntryEmail.grid(row=0, column=1, padx=10, pady=5)
         EntryNome.grid(row=1, column=1, padx=10, pady=5)
         EntryPassword.grid(row=2, column=1, padx=10, pady=5)
         
-        Hello_Label = Label(text = 'Good morning!' + EntryCognome.get() + ' ' + EntryNome.get()).grid(row=4, column=5, padx=10, pady=5)
+        # Hello_Label = Label(text = 'Good morning!' + EntryCognome.get() + ' ' + EntryNome.get()).grid(row=4, column=5, padx=10, pady=5)
 
-        Button(self, text="Login", width=10, command=lambda : controller.show_frame(Hello_Label)).grid(row=3, column=0, sticky="w", padx=10, pady=5)
+        Button(self, text="registra utente nel DB", width=10, command=self.execute_query(self,EntryEmail, EntryNome, EntryPassword)).grid(row=3, column=0, sticky="w", padx=10, pady=5)
+        
 
+
+    def execute_query(self, Email, Nome, Password):        
+        conn = pymssql.connect(server='192.168.40.16\SQLEXPRESS', database='cilibeanu.nicolae', user='cilibeanu.nicolae', password='xxx123##')  #dacasa: 5.172.64.2
+        cursor = conn.cursor()
+        cursor.execute(f'''
+                INSERT INTO Utente (nome_utente, email, passw)
+                VALUES
+                ({Email}, {Nome}, {Password}),
+                ''')
+        conn.commit()
+
+		
+		
         
 
 
@@ -196,7 +211,7 @@ class Page3(tk.Frame):
 		button2.grid(row = 2, column = 1, padx = 10, pady = 10)
 		
 		button3 = ttk.Button(self, text ="Page 2",
-							command = lambda : controller.show_frame(Page2))
+							command = lambda : controller.show_frame(Sign_Up))
 	
 		# putting the button in its place by
 		# using grid

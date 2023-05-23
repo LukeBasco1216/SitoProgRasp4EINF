@@ -50,11 +50,11 @@ class StartPage(tk.Frame):
 		tk.Frame.__init__(self, parent)
 		
 		# label of frame Layout 2
-		label = ttk.Label(self, text ="Startpage", font = LARGEFONT)
+		title = ttk.Label(self, text ="Startpage", font = LARGEFONT)
 		
 		# putting the grid in its place by using
 		# grid
-		label.grid(row = 0, column = 4, padx = 10, pady = 10)
+		title.grid(row = 0, column = 4, padx = 10, pady = 10)
 
 		button1 = ttk.Button(self, text ="Page 1",
 		command = lambda : controller.show_frame(Page1))
@@ -86,8 +86,8 @@ class Page1(tk.Frame):
 	def __init__(self, parent, controller):
 		
 		tk.Frame.__init__(self, parent)
-		label = ttk.Label(self, text ="Page 1", font = LARGEFONT)
-		label.grid(row = 0, column = 4, padx = 10, pady = 10)
+		title = ttk.Label(self, text ="Page 1", font = LARGEFONT)
+		title.grid(row = 0, column = 4, padx = 10, pady = 10)
 
 		# button to show frame 2 with text
 		# layout2
@@ -121,8 +121,8 @@ class Page1(tk.Frame):
 class Page2(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		label = ttk.Label(self, text ="Page 2", font = LARGEFONT)
-		label.grid(row = 0, column = 4, padx = 10, pady = 10)
+		title = ttk.Label(self, text ="Page 2", font = LARGEFONT)
+		title.grid(row = 0, column = 4, padx = 10, pady = 10)
 
 		# button to show frame 2 with text
 		# layout2
@@ -155,8 +155,8 @@ class Page2(tk.Frame):
 class Page3(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		label = ttk.Label(self, text ="Page 3", font = LARGEFONT)
-		label.grid(row = 0, column = 4, padx = 10, pady = 10)
+		title = ttk.Label(self, text ="Page 3", font = LARGEFONT)
+		title.grid(row = 0, column = 4, padx = 10, pady = 10)
 
 		# button to show frame 2 with text
 		# layout2
