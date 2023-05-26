@@ -152,34 +152,51 @@ class Sign_Up(tk.Frame):
 		# using grid
         button3.grid(row = 3, column = 1, padx = 10, pady = 10)
 
-        Email = Label(self, text = 'Insert Email: ').grid(row=0)
+        Email = Label(self, text='Insert Email: ')
+        Email.grid(row=0, column=0, padx=10, pady=5)
 
-        Nome = Label(self, text = 'Insert name: ').grid(row=1)
+        Nome = Label(self, text='Insert name: ')
+        Nome.grid(row=1, column=0, padx=10, pady=5)
 
-        Password = Label(self, text = 'Insert password: ').grid(row=2)
+        Password = Label(self, text='Insert password: ')
+        Password.grid(row=2, column=0, padx=10, pady=5)
 
         EntryEmail = Entry(self)
-        EntryNome = Entry(self)
-        EntryPassword = Entry(self,show='*')
         EntryEmail.grid(row=0, column=1, padx=10, pady=5)
+
+        EntryNome = Entry(self)
         EntryNome.grid(row=1, column=1, padx=10, pady=5)
+
+        EntryPassword = Entry(self, show='*')
         EntryPassword.grid(row=2, column=1, padx=10, pady=5)
-        
-        # Hello_Label = Label(text = 'Good morning!' + EntryCognome.get() + ' ' + EntryNome.get()).grid(row=4, column=5, padx=10, pady=5)
 
-        Button(self, text="registra utente nel DB", width=10, command=self.execute_query(self,EntryEmail, EntryNome, EntryPassword)).grid(row=3, column=0, sticky="w", padx=10, pady=5)
-        
+        Button(self, text="registra", width=20, command=lambda: self.insert(EntryEmail.get(), EntryNome.get(), EntryPassword.get())).grid(row=6, column=0, sticky="w", padx=10, pady=10)
 
-
-    def execute_query(self, Email, Nome, Password):        
-        conn = pymssql.connect(server='192.168.40.16\SQLEXPRESS', database='cilibeanu.nicolae', user='cilibeanu.nicolae', password='xxx123##')  #dacasa: 5.172.64.2
+    def insert(self, Email, Nome, Password):
+        conn = pymssql.connect(server='5.172.64.20\SQLEXPRESS', database='cilibeanu.nicolae', user='cilibeanu.nicolae', password='xxx123##')
         cursor = conn.cursor()
-        cursor.execute(f'''
-                INSERT INTO Utente (nome_utente, email, passw)
-                VALUES
-                ({Email}, {Nome}, {Password}),
-                ''')
+        Str_Email = str(Email)
+        Str_Nome = str(Nome)
+        Str_Password = str(Password)
+
+        print("Email:", Str_Email)
+        print("Nome:", Str_Nome)
+        print("Password:", Str_Password)
+
+        insert_q = "insert into Utente(nome_utente, email, passw) VALUES (%s, %s, %s)"
+        vals = (Str_Email, Str_Nome, Str_Password)
+        cursor.execute(insert_q, vals)
         conn.commit()
+        conn.close()
+
+	# def execute_query(self, Email, Nome, Password):
+	#     conn = pymssql.connect(server='5.172.64.20\SQLEXPRESS', database='cilibeanu.nicolae', user='cilibeanu.nicolae', password='xxx123##') #dacasa: 5.172.64.20
+	#     cursor = conn.cursor()
+	#     Str_Email = str(Email)
+	#     Str_Nome = str(Nome)
+	#     Str_Password = str(Password)
+	#     cursor.execute(f"INSERT INTO Utente (nome_utente, email, passw) VALUES ('{Str_Email}', '{Str_Nome}', '{Str_Password}')")
+	#     conn.commit()
 
 		
 		
