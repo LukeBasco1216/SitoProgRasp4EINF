@@ -249,21 +249,39 @@ class Sign_Up(tk.Frame):
         self.grid_columnconfigure(4, weight=1)
 
     def insert(self, Email, Nome, Password):
-        conn = pymssql.connect(server='5.172.64.20\SQLEXPRESS', database='cilibeanu.nicolae', user='cilibeanu.nicolae', password='xxx123##')
+        conn = pymssql.connect(server='192.168.40.16\SQLEXPRESS', database='cilibeanu.nicolae', user='cilibeanu.nicolae', password='xxx123##')
         cursor = conn.cursor()
         Str_Email = str(Email)
         Str_Nome = str(Nome)
         Str_Password = str(Password)
+        at = '@'
 
         print("Email:", Str_Email)
         print("Nome:", Str_Nome)
         print("Password:", Str_Password)
+        if at in Str_Email:
+            check_email(Str_Email)
+            if Check = True:
+                insert_q = "insert into Utente(nome_utente, email, passw) VALUES (%s, %s, %s)"
+                vals = (Str_Email, Str_Nome, Str_Password)
+                cursor.execute(insert_q, vals)
+                conn.commit()
+                conn.close()
+        else:
+            print('Email non valido!')
+import re
 
-        insert_q = "insert into Utente(nome_utente, email, passw) VALUES (%s, %s, %s)"
-        vals = (Str_Email, Str_Nome, Str_Password)
-        cursor.execute(insert_q, vals)
-        conn.commit()
-        conn.close()
+    def check_email(string):
+        # Regular expression pattern for email validation
+        pattern = r'^[\w\.-]+@[\w\.-]+\.[\w]+$'
+        if re.match(pattern, string):
+            # Check if the string contains one of the specified domain extensions
+            if any(ext in string for ext in ['.com', '.it', '.org', '.edu']):
+                return Check = True
+        return Check = False
+
+
+        
 
 	# def execute_query(self, Email, Nome, Password):
 	#     conn = pymssql.connect(server='5.172.64.20\SQLEXPRESS', database='cilibeanu.nicolae', user='cilibeanu.nicolae', password='xxx123##') #dacasa: 5.172.64.20
