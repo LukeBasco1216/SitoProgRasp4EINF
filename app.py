@@ -15,13 +15,20 @@ class tkinterApp(tk.Tk):
 		
 		# __init__ function for class Tk
 		tk.Tk.__init__(self, *args, **kwargs)
+  
+  
+		# # max frame size
+		# self.geometry("800x600")
+		# # unresizable
+		# self.resizable(False, False)
+
 		
 		# creating a container
 		container = tk.Frame(self)
 		container.grid(row=5,column=5)
-
-		container.grid_rowconfigure(0, weight = 1)
-		container.grid_columnconfigure(0, weight = 1)
+ 
+		container.grid_rowconfigure(10, weight = 1)
+		container.grid_columnconfigure(10, weight = 1, minsize=200)
 
 		# initializing frames to an empty array
 		self.frames = {}
@@ -52,15 +59,24 @@ class tkinterApp(tk.Tk):
 class StartPage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
+  
+  
+  
+		# # max frame size
+		# self.geometry("800x600")
+		# # unresizable
+		# self.resizable(False, False)
+  
+  
 		
 		# label of frame Layout 2
 		label = ttk.Label(self, text ="Startpage", font = LARGEFONT)
 		
 		# putting the grid in its place by using
-		# grid
-		label.grid(row = 0, column = 4, padx = 10, pady = 10)
+		# grid - columnspan=2 dovrebbe far occupare il label di 2 colonne e sticky posizionarlo in mezzo ma non funziona..........................
+		label.grid(row = 0, column = 5, padx = 10, pady = 10, columnspan=2, sticky="nsew")
 
-		button1 = ttk.Button(self, text ="Page 1",
+		button1 = ttk.Button(self, text ="Update info",
 		command = lambda : controller.show_frame(Page1))
 	
 		# putting the button in its place by
@@ -68,7 +84,7 @@ class StartPage(tk.Frame):
 		button1.grid(row = 1, column = 1, padx = 10, pady = 10)
 
 		## button to show frame 2 with text layout2
-		button2 = ttk.Button(self, text ="Page 2",
+		button2 = ttk.Button(self, text ="Add User",
 		command = lambda : controller.show_frame(Sign_Up))
 	
 		# putting the button in its place by
@@ -81,6 +97,8 @@ class StartPage(tk.Frame):
 		# putting the button in its place by
 		# using grid
 		button3.grid(row = 3, column = 1, padx = 10, pady = 10)
+		self.grid_columnconfigure(4, weight=1)
+  
 		
 
 
@@ -88,9 +106,16 @@ class StartPage(tk.Frame):
 class Page1(tk.Frame):
 	
 	def __init__(self, parent, controller):
-		
 		tk.Frame.__init__(self, parent)
-		label = ttk.Label(self, text ="Page 1", font = LARGEFONT)
+  
+		# # max frame size
+		# self.geometry("800x600")
+		# # unresizable
+		# self.resizable(False, False)
+  
+  
+  
+		label = ttk.Label(self, text ="Update info", font = LARGEFONT)
 		label.grid(row = 0, column = 4, padx = 10, pady = 10)
 
 		# button to show frame 2 with text
@@ -117,12 +142,11 @@ class Page1(tk.Frame):
 		# putting the button in its place by
 		# using grid
 		button3.grid(row = 3, column = 1, padx = 10, pady = 10)
-<<<<<<< HEAD
 		self.grid_columnconfigure(4, weight=1)
   
   
 		def ModUserN():
-
+      
 			NomeN = Label(self, text='Insert new Username: ')
 			NomeN.grid(row=6, column=0, padx=10, pady=5)
 
@@ -157,8 +181,6 @@ class Page1(tk.Frame):
 
 
 
-=======
->>>>>>> parent of a04aee3 (modifica)
   
   
   
@@ -167,12 +189,21 @@ class Page1(tk.Frame):
 class Sign_Up(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = ttk.Label(self, text ="Inserzione", font = LARGEFONT)
-        label.grid(row = 0, column = 4, padx = 10, pady = 10)
+        
+        
+        
+        # # max frame size
+        # self.geometry("800x600")
+		# # unresizable
+        # self.resizable(False, False)
+        
+        
+        label = ttk.Label(self, text ="Insertion", font = LARGEFONT)
+        label.grid(row=0, column=5, columnspan=2, padx=10, pady=10)
   
         # button to show frame 2 with text
         # layout2
-        button1 = ttk.Button(self, text ="Update info",
+        button1 = ttk.Button(self, text ="Page 1",
                             command = lambda : controller.show_frame(Page1))
      
         # putting the button in its place by
@@ -212,43 +243,28 @@ class Sign_Up(tk.Frame):
 
         EntryPassword = Entry(self, show='*')
         EntryPassword.grid(row=2, column=1, padx=10, pady=5)
-
+        
+		# fare il get dopo tutti gli entry altrimenti i dati presi dala funzione(insert) saranno vuoti
         Button(self, text="registra", width=20, command=lambda: self.insert(EntryEmail.get(), EntryNome.get(), EntryPassword.get())).grid(row=6, column=0, sticky="w", padx=10, pady=10)
+        
+        self.grid_columnconfigure(4, weight=1)
 
     def insert(self, Email, Nome, Password):
-        conn = pymssql.connect(server='192.168.40.16\SQLEXPRESS', database='cilibeanu.nicolae', user='cilibeanu.nicolae', password='xxx123##')
+        conn = pymssql.connect(server='5.172.64.20\SQLEXPRESS', database='cilibeanu.nicolae', user='cilibeanu.nicolae', password='xxx123##')
         cursor = conn.cursor()
         Str_Email = str(Email)
         Str_Nome = str(Nome)
         Str_Password = str(Password)
-        at = '@'
 
         print("Email:", Str_Email)
         print("Nome:", Str_Nome)
         print("Password:", Str_Password)
-        if at in Str_Email:
-            check_email(Str_Email)
-            if Check = True:
-                insert_q = "insert into Utente(nome_utente, email, passw) VALUES (%s, %s, %s)"
-                vals = (Str_Email, Str_Nome, Str_Password)
-                cursor.execute(insert_q, vals)
-                conn.commit()
-                conn.close()
-        else:
-            print('Email non valido!')
-import re
 
-    def check_email(string):
-        # Regular expression pattern for email validation
-        pattern = r'^[\w\.-]+@[\w\.-]+\.[\w]+$'
-        if re.match(pattern, string):
-            # Check if the string contains one of the specified domain extensions
-            if any(ext in string for ext in ['.com', '.it', '.org', '.edu']):
-                return Check = True
-        return Check = False
-
-
-        
+        insert_q = "insert into Utente(nome_utente, email, passw) VALUES (%s, %s, %s)"
+        vals = (Str_Email, Str_Nome, Str_Password)
+        cursor.execute(insert_q, vals)
+        conn.commit()
+        conn.close()
 
 	# def execute_query(self, Email, Nome, Password):
 	#     conn = pymssql.connect(server='5.172.64.20\SQLEXPRESS', database='cilibeanu.nicolae', user='cilibeanu.nicolae', password='xxx123##') #dacasa: 5.172.64.20
@@ -267,12 +283,21 @@ import re
 class Page3(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
+  
+  
+		# # max frame size
+		# self.geometry("800x600")
+		# # unresizable
+		# self.resizable(False, False)
+  
+  
+  
 		label = ttk.Label(self, text ="Page 3", font = LARGEFONT)
 		label.grid(row = 0, column = 4, padx = 10, pady = 10)
 
 		# button to show frame 2 with text
 		# layout2
-		button1 = ttk.Button(self, text ="Update info",
+		button1 = ttk.Button(self, text ="Page 1",
 							command = lambda : controller.show_frame(Page1))
 	
 		# putting the button in its place by
@@ -345,10 +370,4 @@ class Page3(tk.Frame):
 
 app = tkinterApp()
 
-<<<<<<< HEAD
 app.mainloop()
-=======
-
-
-app.mainloop()
->>>>>>> parent of a04aee3 (modifica)
