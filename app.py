@@ -1,3 +1,4 @@
+#Componente Gruppo: Basco Luke, Cilibeanu Sebastian, Song Alfio
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
