@@ -146,11 +146,6 @@ class Page1(tk.Frame):
   
   
 		def ModUserN():
-      
-			EmailM.grid_forget()
-			EntryEmailM.grid_forget()
-			NomeM.grid_forget()
-			EntryNomeM.grid_forget()
 
 			NomeN = Label(self, text='Insert new Username: ')
 			NomeN.grid(row=6, column=0, padx=10, pady=5)
@@ -207,7 +202,7 @@ class Sign_Up(tk.Frame):
   
         # button to show frame 2 with text
         # layout2
-        button1 = ttk.Button(self, text ="Page 1",
+        button1 = ttk.Button(self, text ="Update info",
                             command = lambda : controller.show_frame(Page1))
      
         # putting the button in its place by
@@ -301,7 +296,7 @@ class Page3(tk.Frame):
 
 		# button to show frame 2 with text
 		# layout2
-		button1 = ttk.Button(self, text ="Page 1",
+		button1 = ttk.Button(self, text ="Update info",
 							command = lambda : controller.show_frame(Page1))
 	
 		# putting the button in its place by
